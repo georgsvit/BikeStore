@@ -10,7 +10,10 @@ namespace BikeStore.Data
     public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options) { }
+            : base(options) 
+        {
+            Database.EnsureCreated();
+        }
 
         public DbSet<AgeGroup> AgeGroups { get; set; }
         public DbSet<Bike> Bikes { get; set; }

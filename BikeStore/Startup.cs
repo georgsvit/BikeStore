@@ -13,15 +13,20 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BikeStore.Models.Domain;
+using BikeStore.Extensions;
+using BikeStore.Services;
 
 namespace BikeStore
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            CurrentEnvironment = env;
         }
+
+        private IWebHostEnvironment CurrentEnvironment { get; set; }
 
         public IConfiguration Configuration { get; }
 
@@ -44,6 +49,16 @@ namespace BikeStore
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            // Custom services
+            if (CurrentEnvironment.IsDevelopment())
+            {
+                services.Configure<SmtpSettings>(Configuration.GetSection("SmtpDevelopmentSettings"));
+            } else
+            {
+                services.Configure<SmtpSettings>(Configuration.GetSection("SmtpReleaseSettings"));
+            }
+            services.AddMailer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
