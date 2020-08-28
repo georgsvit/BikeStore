@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<div class="text-light">
+
+    <h1>Контрольна панель адміністратора</h1>
+
+    <ul style="font-size: 20px;">
+        <li><a asp-action="" asp-controller="">Створити модель</a></li>
+        <li><a asp-action="" asp-controller="">Переглянути усі моделі</a></li>
+        <li><a asp-action="" asp-controller="">Внести дані про поставку</a></li>
+        <li><a asp-action="" asp-controller="">Історія поставок</a></li>
+        <li><a asp-action="" asp-controller="">Історія замовлень</a></li>
+        <li><a asp-action="" asp-controller="">Створити E-mail розсилку</a></li>
+    </ul>
+    <hr />
+    <ul style="font-size: 20px;">
+        @*<li><a  asp-action="Index" asp-controller="AgeGroups">Вікові групи</a></li>*@
+        <li><a asp-area="DbAdmin" asp-page="/Index">Вікові групи</a></li>
+
+    </ul>
+</div>

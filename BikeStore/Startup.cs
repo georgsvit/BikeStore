@@ -59,6 +59,8 @@ namespace BikeStore
                 services.Configure<SmtpSettings>(Configuration.GetSection("SmtpReleaseSettings"));
             }
             services.AddMailer();
+
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +68,7 @@ namespace BikeStore
         {
             if (env.IsDevelopment())
             {
+                app.UseStatusCodePages();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
@@ -85,11 +88,17 @@ namespace BikeStore
 
             app.UseEndpoints(endpoints =>
             {
+                //endpoints.MapAreaControllerRoute(
+                //    name: "Area",
+                //    areaName: nameof(Areas.Admin),
+                //    pattern: "{area:exists}/{controller=AgeGroups}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                
             });
+
         }
     }
 }

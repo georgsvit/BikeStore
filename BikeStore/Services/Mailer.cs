@@ -29,7 +29,7 @@ namespace BikeStore.Services
             {
                 var message = new MimeMessage();
                 message.From.Add(new MailboxAddress(smtpSettings.SenderName, smtpSettings.SenderEmail));
-                message.To.Add(new MailboxAddress(email, email));
+                message.To.Add(new MailboxAddress("", email));
                 message.Subject = subject;
                 message.Body = new TextPart("html")
                 {
