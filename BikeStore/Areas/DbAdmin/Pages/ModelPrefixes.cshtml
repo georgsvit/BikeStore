@@ -1,25 +1,28 @@
 ﻿@page
-@model BikeStore.Areas.DbAdmin.Pages.IndexModel
-
+@model BikeStore.Areas.DbAdmin.Pages.ModelPrefixesModel
 @{
-    ViewData["Title"] = "Index";
 }
 
 <script>
-
     function Edit(id) {
         if (document.getElementById('edit ' + id).hidden) {
+            document.getElementById('edit ' + id).className = "d-flex";
+            document.getElementById('common ' + id).className -= "d-flex";
             document.getElementById('edit ' + id).hidden = false;
             document.getElementById('common ' + id).hidden = true;
         } else {
+            console.log("false")
             document.getElementById('edit ' + id).hidden = true;
             document.getElementById('common ' + id).hidden = false;
+            document.getElementById('edit ' + id).className -= "d-flex";
+            document.getElementById('common ' + id).className = "d-flex";
         }
-
     }
 
     function clear() {
-        document.getElementById("value").value = "";
+        for (var i in document.getElementsByClassName("value")) {
+            i.value = "";
+        }
     }
 
     if (window.addEventListener) {
@@ -31,57 +34,57 @@
     }
 </script>
 
-
-<h3>Age Groups</h3>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h3>Model Prefixes</h3>
 
 @Html.AntiForgeryToken()
 
+<div class="justify-content-center form-group form-inline">
+    <span asp-validation-for="Value" class="text-danger"></span>
+</div>
 <div class="form-group form-inline justify-content-center">
     <form method="post">
-        <input class="form-control" asp-for="Value" name="value" id="value" type="text" placeholder="Value" />
+        <input class="form-control value" name="value" type="text" placeholder="Value" />
         <button type="submit" class="btn btn-success" asp-page-handler="Create">Create</button>
     </form>
 </div>
 
+<form method="post" id="deleteform"></form>
+
 <table class="table" id="table">
     <thead>
         <tr>
-            <th>
+            <th scope="col">
                 Value
             </th>
-            <th></th>
+            <th scope="col"></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.groups)
+        @foreach (var item in Model.Prefixes)
         {
-            <tr id="common @item.Id">
-                <td>
+            <tr class="d-flex" id="common @item.Id">
+                <td class="col-6">
                     @Html.DisplayFor(modelItem => item.Value)
                 </td>
-                <td class="form-inline">
+                <td class="col-6">
                     <button class="btn btn-sm btn-primary" onclick="Edit(@item.Id);">Edit</button>
-                    <form method="post">
-                        <button class="btn btn-sm btn-danger" type="submit" asp-page-handler="Delete" asp-route-id="@item.Id" onclick="(function () { if (!confirm('Delete?')) event.preventDefault(); })();">Delete</button>
-                    </form>
+                    <button class="btn btn-sm btn-danger" form="deleteform" type="submit" asp-page-handler="Delete" asp-route-id="@item.Id" onclick="(function () { if (!confirm('Delete?')) event.preventDefault(); })();">Delete</button>
                 </td>
             </tr>
-            <tr id="edit @item.Id" class="visible" hidden>
-                <td>
-                    <form method="post" id="editForm @item.Id">
-                        <input type="text" value="@item.Value" asp-for="Value" />
-                    </form>
+            <tr id="edit @item.Id" hidden>
+                <td class="col-6">
+                    <form method="post" id="editForm @item.Id"></form>
+                    <input class="form-control" form="editForm @item.Id" type="text" value="@item.Value" name="value" />
                 </td>
-                <td>
+                <td class="col-6">
                     <button class="btn btn-sm btn-success" form="editForm @item.Id" asp-page-handler="Edit" asp-route-id="@item.Id" onclick="(function () { if (!confirm('Save?')) event.preventDefault(); })();">Save</button>
                     <button class="btn btn-sm btn-warning" onclick="Edit(@item.Id);">Cancel</button>
                 </td>
             </tr>
         }
-
     </tbody>
 </table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

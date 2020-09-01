@@ -1,0 +1,116 @@
+﻿@page
+@model BikeStore.Areas.DbAdmin.Pages.FrameSizesModel
+@{
+}
+
+<script>
+    function Edit(id) {
+        if (document.getElementById('edit ' + id).hidden) {
+            document.getElementById('edit ' + id).className = "d-flex";
+            document.getElementById('common ' + id).className -= "d-flex";
+            document.getElementById('edit ' + id).hidden = false;
+            document.getElementById('common ' + id).hidden = true;
+        } else {
+            console.log("false")
+            document.getElementById('edit ' + id).hidden = true;
+            document.getElementById('common ' + id).hidden = false;
+            document.getElementById('edit ' + id).className -= "d-flex";
+            document.getElementById('common ' + id).className = "d-flex";
+        }
+    }
+
+    function clear() {
+        for (var i in document.getElementsByClassName("value")) {
+            i.value = "";
+        }
+    }
+
+    if (window.addEventListener) {
+        window.addEventListener('load', clear);
+    } else if (window.attachEvent) {
+        window.attachEvent('onload', clear);
+    } else {
+        window.onload = clear;
+    }
+</script>
+
+<h3>Frame Sizes</h3>
+
+@Html.AntiForgeryToken()
+
+<div class="col" align="center">
+    <span asp-validation-for="Size" class="text-danger"></span><br />
+    <span asp-validation-for="MinHeight" class="text-danger"></span><br />
+    <span asp-validation-for="MaxHeight" class="text-danger"></span>
+</div>
+<div class="form-group form-inline justify-content-center">
+    <form method="post">
+        <input class="form-control value" name="Size" type="text" placeholder="Value" />
+        <input class="form-control value" name="MinHeight" type="number" min="1" max="210" value="1" />
+        <input class="form-control value" name="MaxHeight" type="number" min="1" max="210" value="1" />
+        <button type="submit" class="btn btn-success" asp-page-handler="Create">Create</button>
+    </form>
+</div>
+
+<form method="post" id="deleteform"></form>
+
+<table class="table" id="table">
+    <thead>
+        <tr class="d-flex">
+            <th class="col-4" scope="col">
+                Value
+            </th>
+            <th class="col-3" scope="col">
+                Min height
+            </th>
+            <th class="col-3" scope="col">
+                Max height
+            </th>
+            <th class="col-2" scope="col">
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Sizes)
+        {            
+            <tr class="d-flex" id="common @item.Id">
+                <td class="col-4">
+                    @Html.DisplayFor(modelItem => item.Size)
+                </td>
+                <td class="col-3">
+                    @Html.DisplayFor(modelItem => item.MinHeight)
+                </td>
+                <td class="col-3">
+                    @Html.DisplayFor(modelItem => item.MaxHeight)
+                </td>
+                <td class="col-2">
+                    <button class="btn btn-sm btn-primary" onclick="Edit(@item.Id);">Edit</button>
+                    <button class="btn btn-sm btn-danger" form="deleteform" type="submit" asp-page-handler="Delete" asp-route-id="@item.Id" onclick="(function () { if (!confirm('Delete?')) event.preventDefault(); })();">Delete</button>
+                </td>
+            </tr>
+            @* hidden inputs *@
+            <tr id="edit @item.Id" hidden>
+                <td class="col-4">
+                    <form method="post" id="editForm @item.Id"></form>
+                    <input class="form-control" form="editForm @item.Id" type="text" value="@item.Size" name="size" />
+                </td>
+                <td class="col-3">                    
+                    <input class="form-control" form="editForm @item.Id" type="number" value="@item.MinHeight" name="minHeight" min="1" max="210"/>
+                </td>
+                <td class="col-3">                    
+                    <input class="form-control" form="editForm @item.Id" type="number" value="@item.MaxHeight" name="maxHeight" min="1" max="210" />
+                </td>
+                <td class="col-2">
+                    <button class="btn btn-sm btn-success" form="editForm @item.Id" asp-page-handler="Edit" asp-route-id="@item.Id" onclick="(function () { if (!confirm('Save?')) event.preventDefault(); })();">Save</button>
+                    <button class="btn btn-sm btn-warning" onclick="Edit(@item.Id);">Cancel</button>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
