@@ -34,7 +34,7 @@
     }
 </script>
 
-<h3>Sexes</h3>
+<h3>Статті</h3>
 
 @Html.AntiForgeryToken()
 
@@ -43,20 +43,22 @@
 </div>
 <div class="form-group form-inline justify-content-center">
     <form method="post">
-        <input class="form-control value" name="value" type="text" placeholder="Value" />
-        <button type="submit" class="btn btn-success" asp-page-handler="Create">Create</button>
+        <input class="form-control value" name="value" type="text" placeholder="Значення" />
+        <button type="submit" class="btn btn-success" asp-page-handler="Create">Створити</button>
     </form>
 </div>
 
 <form method="post" id="deleteform"></form>
 
-<table class="table" id="table">
+<table class="table text-light" id="table">
     <thead>
-        <tr>
-            <th scope="col">
-                Value
+        <tr class="d-flex">
+            <th class="col-6">
+                Значення
             </th>
-            <th scope="col"></th>
+            <th class="col-6">
+                Дії
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -67,8 +69,8 @@
                     @Html.DisplayFor(modelItem => item.Value)
                 </td>
                 <td class="col-6">
-                    <button class="btn btn-sm btn-primary" onclick="Edit(@item.Id);">Edit</button>
-                    <button class="btn btn-sm btn-danger" form="deleteform" type="submit" asp-page-handler="Delete" asp-route-id="@item.Id" onclick="(function () { if (!confirm('Delete?')) event.preventDefault(); })();">Delete</button>
+                    <button class="btn btn-sm btn-primary" onclick="Edit(@item.Id);">Редагувати</button>
+                    <button class="btn btn-sm btn-danger" form="deleteform" type="submit" asp-page-handler="Delete" asp-route-id="@item.Id" onclick="(function () { if (!confirm('Видалити?')) event.preventDefault(); })();">Видалити</button>
                 </td>
             </tr>
             <tr id="edit @item.Id" hidden>
@@ -77,8 +79,8 @@
                     <input class="form-control" form="editForm @item.Id" type="text" value="@item.Value" name="value" />
                 </td>
                 <td class="col-6">
-                    <button class="btn btn-sm btn-success" form="editForm @item.Id" asp-page-handler="Edit" asp-route-id="@item.Id" onclick="(function () { if (!confirm('Save?')) event.preventDefault(); })();">Save</button>
-                    <button class="btn btn-sm btn-warning" onclick="Edit(@item.Id);">Cancel</button>
+                    <button class="btn btn-sm btn-success" form="editForm @item.Id" asp-page-handler="Edit" asp-route-id="@item.Id" onclick="(function () { if (!confirm('Зберегти?')) event.preventDefault(); })();">Зберегти</button>
+                    <button class="btn btn-sm btn-warning" onclick="Edit(@item.Id);">Відхилити</button>
                 </td>
             </tr>
         }

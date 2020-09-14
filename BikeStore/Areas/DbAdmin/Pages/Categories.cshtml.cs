@@ -54,7 +54,7 @@ namespace BikeStore.Areas.DbAdmin.Pages
                 }
                 else
                 {
-                    ModelState.AddModelError("Title", "This title is not unique.");
+                    ModelState.AddModelError("Title", "Дана назва не є унікальною");
                     ModelState["Title"].ValidationState = ModelValidationState.Invalid;
                 }
             }
@@ -77,12 +77,12 @@ namespace BikeStore.Areas.DbAdmin.Pages
         {
             if (_context.Categories.Any(c => c.Title == category.Title))
             {
-                ms.AddModelError("Title", "This title is not unique.");
+                ms.AddModelError("Title", "Дана назва не є унікальною");
                 ms["Title"].ValidationState = ModelValidationState.Invalid;
             }
             if (_context.Statuses.Any(c => c.Description == category.Description))
             {
-                ms.AddModelError("Description", "This description is not unique.");
+                ms.AddModelError("Description", "Даний опис не є унікальним");
                 ms["Description"].ValidationState = ModelValidationState.Invalid;
             }
         }

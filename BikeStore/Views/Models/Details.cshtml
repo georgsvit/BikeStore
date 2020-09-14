@@ -1,0 +1,195 @@
+﻿@model BikeStore.Models.Domain.Model
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="text-light">
+
+    @if (TempData["Message"] as string != null)
+    {
+        <h4 class="text-danger">@(TempData["Message"] as string)</h4>
+    }
+
+    <h1>Інформація про модель</h1>
+    <div>
+        <h4>@Model.FullName</h4>
+        <hr />
+
+        <div>
+            @Model.Description
+        </div>
+        <br />
+        <div>
+            <table class="table-bordered">
+                <tr>
+                    <td>Рік</td>
+                    <td>@Model.Year</td>
+                </tr>
+                <tr>
+                    <td>Стать</td>
+                    <td>@Model.Sex.Value</td>
+                </tr>
+                <tr>
+                    <td>Вік</td>
+                    <td>@Model.AgeGroup.Value</td>
+                </tr>
+                <tr>
+                    <td>Категорія</td>
+                    <td>@Model.Category.Title</td>
+                </tr>
+                <tr>
+                    <td>Тип підвіски</td>
+                    <td>@Model.Suspension.Type</td>
+                </tr>
+                <tr>
+                    <td>Розмір колес в дюймах</td>
+                    <td>@Model.WheelSize</td>
+                </tr>
+            </table>
+        </div>
+
+        <br />
+
+
+        <form asp-action="Delete" id="del_form" asp-controller="Models" asp-route-Id="@Model.Id" method="post">
+            <input type="hidden" asp-for="@Model.Id" name="Id" />
+
+            <button type="submit" class="btn btn-danger del_b">
+                Видалити
+            </button>
+            <a asp-action="Edit" asp-controller="Models" class="btn btn-warning"
+               asp-route-id="@Model.Id">
+                Редагувати
+            </a>
+        </form>
+
+        <hr />
+
+        <div>
+            <h2>Таблиця наявних розмірів</h2>
+            <br />
+            <table class="table text-light" style="font-size: 20px;">
+                <thead>
+                    <tr>
+                        <td></td>
+                        <td>XS</td>
+                        <td>S</td>
+                        <td>M</td>
+                        <td>L</td>
+                        <td>XL</td>
+                    </tr>
+                </thead>
+                @foreach (var pair in ViewBag.ColoursAndSizes)
+                {
+                    <tr>
+                        <td>@pair.Key</td>
+                        <td>@pair.Value[0]</td>
+                        <td>@pair.Value[1]</td>
+                        <td>@pair.Value[2]</td>
+                        <td>@pair.Value[3]</td>
+                        <td>@pair.Value[4]</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <hr />
+
+        <h2>Кольорні схеми</h2>
+
+        @if (Model.ModelColour != null)
+        {
+            <table class="table table-bordered text-light table-striped">
+                <tr>
+                    <th>Зображення</th>
+                    <th>Колір</th>
+                    <th>Дії</th>
+                </tr>
+                @foreach (var mc in Model.ModelColour)
+                {
+                    <tr>
+                        <td><img class="d-block img-fluid card-img-top" src=@mc.ImageLink style="width: 20%;" /></td>
+                        <td>@mc.Colour.ColourValue</td>
+                        <td>
+                            <form asp-action="Delete" asp-controller="ModelColours" asp-route-productId="@mc.Id" method="post">
+                                <a asp-action="Edit" asp-controller="ModelColours" class="btn btn-warning"
+                                   asp-route-id="@mc.Id">
+                                    Редагувати
+                                </a>
+                                <input type="hidden" asp-for="@mc.Id" name="Id" />
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="(function () { if (!confirm('Видалити колірну модель?')) event.preventDefault(); })();">
+                                    Видалити
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <div class="text-center">
+                <a asp-action="Create" asp-controller="ModelColours" asp-route-modelId=@Model.Id class="btn btn-primary">Створити</a>
+            </div>
+        }
+        else
+        {
+            <p>Для данної моделі немає колірних схем(</p>
+            <div class="text-center">
+                <a asp-action="Create" asp-controller="ModelColours" asp-route-modelId=@Model.Id class="btn btn-primary">Створити</a>
+            </div>
+        }
+
+
+        <hr />
+
+        <h2>Велосипеди</h2>
+        <br />
+        @if (ViewBag.AllBikes.Count > 0)
+        {
+            <table class="table table-bordered text-light table-striped">
+                <thead>
+                    <tr>
+                        <td>Номер рами</td>
+                        <td>Колір</td>
+                        <td>Статус</td>
+                        <td>Дії</td>
+                    </tr>
+                </thead>
+                @foreach (var b in ViewBag.AllBikes)
+                {
+                    <tr>
+                        <td>@b.FrameNumber</td>
+                        <td>@b.ModelColour.Colour.ColourValue</td>
+                        <td>@b.Status.Value</td>
+                        <td>
+                            @if (b.StatusId == 1)
+                            {
+                                <a asp-action="Edit" asp-controller="Bikes" asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()" class="btn btn-sm btn-warning"
+                                   asp-route-id="@b.Id">
+                                    Редагувати
+                                </a>
+
+                            }
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p>Для данної моделі немає велосипедів(</p>
+        }
+
+    </div>
+</div>
+
+<script>
+    const f = [...document.getElementsByClassName('del_b')];
+    for (let i = 0; i < f.length; i++)
+        f[i].addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('Ви дійсно бажаєте видалити модель')) {
+                const form = document.getElementById('del_form');
+                form.submit();
+            }
+        });
+</script>

@@ -1,25 +1,25 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Панель керування";
 }
-
-<h1>Index</h1>
 
 <div class="text-light">
 
     <h1>Контрольна панель адміністратора</h1>
 
-    <ul style="font-size: 20px;">
-        <li><a asp-action="" asp-controller="">Створити модель</a></li>
-        <li><a asp-action="" asp-controller="">Переглянути усі моделі</a></li>
-        <li><a asp-action="" asp-controller="">Внести дані про поставку</a></li>
-        <li><a asp-action="" asp-controller="">Історія поставок</a></li>
-        <li><a asp-action="" asp-controller="">Історія замовлень</a></li>
-        <li><a asp-action="" asp-controller="">Створити E-mail розсилку</a></li>
+    <ul>
+        <li><a asp-action="Index" asp-controller="Models">Усі моделі</a></li>
+        <li><a asp-action="Create" asp-controller="Models">Створити модель</a></li>
+        <li><a asp-action="CreateSupply" asp-controller="Admin">Внести дані про поставку</a></li>
+        
+        @*<li><a asp-action="CreateSupply" asp-controller="Admin">Історія поставок</a></li>
+        <li><a asp-action="CreateSupply" asp-controller="Admin">Історія замовлень</a></li>
+        <li><a asp-action="CreateSupply" asp-controller="Admin">Створити E-mail розсилку</a></li>*@
+        
     </ul>
-    <hr />
-    <ul style="font-size: 20px;">
-        @*<li><a  asp-action="Index" asp-controller="AgeGroups">Вікові групи</a></li>*@
+    <hr class="border-light" />
+    <h3>Керування данними у БД</h3>
+    <ul>
         <li><a asp-area="DbAdmin" asp-page="/AgeGroups">Вікові групи</a></li>
         <li><a asp-area="DbAdmin" asp-page="/Categories">Категорії</a></li>
         <li><a asp-area="DbAdmin" asp-page="/Colours">Кольори</a></li>
@@ -30,6 +30,5 @@
         <li><a asp-area="DbAdmin" asp-page="/Statuses">Статуси</a></li>
         <li><a asp-area="DbAdmin" asp-page="/StoringPlaces">Місця зберігання</a></li>
         <li><a asp-area="DbAdmin" asp-page="/Suspensions">Типи підвіски</a></li>
-
     </ul>
 </div>

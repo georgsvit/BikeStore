@@ -1,0 +1,29 @@
+﻿@model SupplyHeader
+
+<div class="text-light">
+
+    <h1>Загальні дані про поставку</h1>
+    <br />
+    <div class="text-center text-light">
+        <form asp-action="CreateSupply" asp-controller="Admin">
+            <div class="justify-content-center form-group form-inline">
+                <span asp-validation-for="Provider" class="text-danger"></span>
+            </div>
+            <div class="form-group form-inline justify-content-center">
+                <label class="mr-3">Постачальник</label>
+                <input class="form-control value" type="text" asp-for="Provider" value="@Model?.Provider" />          
+            </div>
+            <div>
+                <label class="mr-5">Прийняв</label>
+                <select asp-for="RecipientId" asp-items="ViewBag.Staff"></select>
+            </div>
+            <br />
+            <div>
+                <input class="btn btn-success" type="submit" value="Створити" />
+                <a asp-action="Index" asp-controller="Admin" class="btn btn-dark">Назад</a>
+            </div>
+        </form>
+
+    </div>
+
+</div>

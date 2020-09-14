@@ -1,32 +1,37 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace BikeStore.Models.Domain
 {
     public class ModelColour
     {
         public int Id { get; set; }
-        public string ImageLink { get; set; }        
         //
-        public int ModelId { get; set; }
+        [Required(ErrorMessage = "Будь ласка введіть посилання на зображення")]
+        [DataType(DataType.ImageUrl)]
+        public string ImageLink { get; set; }
+        //
         public Model Model { get; set; }
+        [Required(ErrorMessage = "Будь ласка оберіть модель")]
+        public int ModelId { get; set; }
         //
-        public int ColourId { get; set; }
         public Colour Colour { get; set; }
+        [Required(ErrorMessage = "Будь ласка оберіть колір")]
+        public int ColourId { get; set; }
         //
         public ICollection<Bike> Bike { get; set; }
 
-        public List<int> FrameGetter()
+        public List<int> FrameGetter(Dictionary<string, int> sizes)
         {
-            List<int> output = new List<int>() { 0, 0, 0, 0, 0 };
-
             foreach (Bike b in Bike)
             {
-                if (b.StatusId == 1) output[b.FrameSizeId - 1]++;
+                if (b.StatusId == 1) sizes[b.FrameSize.Size]++;
             }
 
-            return output;
+            return sizes.Values.ToList();            
         }
     }
 }

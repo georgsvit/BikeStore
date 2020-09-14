@@ -11,7 +11,7 @@ namespace BikeStore.Models.Domain
         public string ShippingAddress { get; set; }
         public DateTime CreationDate { get; set; }
         //
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
         //
         public ICollection<OrderDetail> OrderDetail { get; set; }

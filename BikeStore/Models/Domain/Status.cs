@@ -7,11 +7,13 @@ namespace BikeStore.Models.Domain
     public class Status
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "{0} is required")]
-        [StringLength(25, MinimumLength = 3, ErrorMessage = "{0} is too short or too long")]
+        [Display(Name = "Значення статусу")]
+        [Required(ErrorMessage = "{0} є необхідним")]
+        [StringLength(25, MinimumLength = 3, ErrorMessage = "{0} є занадто коротким або занадто великим")]
         public string Value { get; set; }
-        [Required(ErrorMessage = "{0} is required")]
-        [StringLength(200, MinimumLength = 3, ErrorMessage = "{0} is too short or too long")]
+        [Display(Name = "Опис")]
+        [Required(ErrorMessage = "{0} є необхідним")]
+        [StringLength(200, MinimumLength = 3, ErrorMessage = "{0} є занадто коротким або занадто великим")]
         public string Description { get; set; }
 
         public ICollection<Bike> Bike { get; set; }

@@ -12,5 +12,10 @@ namespace BikeStore.Models.Domain
 
         public virtual ICollection<OrderHeader> OrderHeader { get; set; }
         public virtual ICollection<SupplyHeader> SupplyHeader { get; set; }
+
+        public string GetFullName
+        {
+            get => FirstName + " " + LastName;
+        }
     }
 }

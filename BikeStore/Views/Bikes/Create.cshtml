@@ -1,0 +1,46 @@
+﻿@model BikeStore.Models.Domain.Bike
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Створити</h1>
+
+<h4>велосипед</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" asp-route-returnUrl="@ViewBag.ReturnUrl">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FrameNumber" class="control-label"></label>
+                <input asp-for="FrameNumber" class="form-control" />
+                <span asp-validation-for="FrameNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StatusId" class="control-label"></label>
+                <select asp-for="StatusId" class ="form-control" asp-items="ViewBag.StatusId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="StoringPlaceId" class="control-label"></label>
+                <select asp-for="StoringPlaceId" class ="form-control" asp-items="ViewBag.StoringPlaceId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FrameSizeId" class="control-label"></label>
+                <select asp-for="FrameSizeId" class ="form-control" asp-items="ViewBag.FrameSizeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModelColourId" class="control-label"></label>
+                <select asp-for="ModelColourId" class ="form-control" asp-items="ViewBag.ModelColourId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a href="@ViewBag.ReturnUrl">Повернутися до змісту поставки</a>
+</div>
+

@@ -15,7 +15,7 @@ namespace BikeStore.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.7")
+                .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -44,7 +44,9 @@ namespace BikeStore.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("FrameNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
 
                     b.Property<int>("FrameSizeId")
                         .HasColumnType("int");
@@ -148,7 +150,8 @@ namespace BikeStore.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(10000);
 
                     b.Property<int>("ModelNameId")
                         .HasColumnType("int");
@@ -199,6 +202,7 @@ namespace BikeStore.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ImageLink")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ModelId")
@@ -283,15 +287,12 @@ namespace BikeStore.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("OrderHeaders");
                 });
@@ -385,17 +386,16 @@ namespace BikeStore.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Provider")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
 
-                    b.Property<int>("RecipientId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("RecipientId1")
+                    b.Property<string>("RecipientId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipientId1");
+                    b.HasIndex("RecipientId");
 
                     b.ToTable("SupplyHeaders");
                 });
@@ -731,7 +731,7 @@ namespace BikeStore.Data.Migrations
                 {
                     b.HasOne("BikeStore.Models.Domain.User", "User")
                         .WithMany("OrderHeader")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("BikeStore.Models.Domain.SupplyDetail", b =>
@@ -753,7 +753,7 @@ namespace BikeStore.Data.Migrations
                 {
                     b.HasOne("BikeStore.Models.Domain.User", "Recipient")
                         .WithMany("SupplyHeader")
-                        .HasForeignKey("RecipientId1");
+                        .HasForeignKey("RecipientId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

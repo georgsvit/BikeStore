@@ -55,7 +55,7 @@ namespace BikeStore.Areas.DbAdmin.Pages
                 }
                 else
                 {
-                    ModelState.AddModelError("Size", "This frame size value is not unique.");
+                    ModelState.AddModelError("Size", "Даний розмір рами не є унікальним");
                     ModelState["Size"].ValidationState = ModelValidationState.Invalid;
                 }
             }
@@ -78,13 +78,13 @@ namespace BikeStore.Areas.DbAdmin.Pages
         {
             if (_context.FrameSizes.Any(s => s.Size == frameSize.Size))
             {
-                ms.AddModelError("Size", "This frame size value is not unique.");
+                ms.AddModelError("Size", "Даний розмір рами не є унікальним");
                 ms["Size"].ValidationState = ModelValidationState.Invalid;
             }
 
             if (_context.FrameSizes.Any(s => s.MinHeight == frameSize.MinHeight && s.MaxHeight == frameSize.MaxHeight))
             {
-                ms.AddModelError("MaxHeight", "This height values are not unique.");
+                ms.AddModelError("MaxHeight", "Дані значення зрісту не є унікальними");
                 ms["MaxHeight"].ValidationState = ModelValidationState.Invalid;
             }
 

@@ -1,0 +1,20 @@
+﻿@model IEnumerable<BikeStore.Models.View.AdminModel>
+
+@{
+    ViewData["Title"] = "Models";
+}
+
+<h1>Models</h1>
+
+<p>
+    <a class="btn btn-info" asp-action="Create">Create New</a>
+</p>
+
+<div class="text-light">
+    <div class="row">
+        @foreach (AdminModel adminModel in Model)
+        {
+            <partial name="AdminModelCard" model="adminModel" />
+        }
+    </div>
+</div>

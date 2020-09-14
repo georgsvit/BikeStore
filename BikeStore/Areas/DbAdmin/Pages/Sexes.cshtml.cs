@@ -53,7 +53,7 @@ namespace BikeStore.Areas.DbAdmin.Pages
                 }
                 else
                 {
-                    ModelState.AddModelError("Value", "This sex is not unique.");
+                    ModelState.AddModelError("Value", "Дана стать не є унікальною");
                     ModelState["Value"].ValidationState = ModelValidationState.Invalid;
                 }
             }
@@ -76,7 +76,7 @@ namespace BikeStore.Areas.DbAdmin.Pages
         {
             if (_context.Sexes.Any(s => s.Value == sex.Value))
             {
-                ms.AddModelError("Value", "This sex is not unique.");
+                ms.AddModelError("Value", "Дана стать не є унікальною");
                 ms["Value"].ValidationState = ModelValidationState.Invalid;
             }
         }

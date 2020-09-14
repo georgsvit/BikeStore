@@ -53,7 +53,7 @@ namespace BikeStore.Areas.DbAdmin.Pages
                 }
                 else
                 {
-                    ModelState.AddModelError("Value", "This prefix is not unique.");
+                    ModelState.AddModelError("Value", "Даний префікс назви не є унікальним");
                     ModelState["Value"].ValidationState = ModelValidationState.Invalid;
                 }
             }
@@ -76,7 +76,7 @@ namespace BikeStore.Areas.DbAdmin.Pages
         {
             if (_context.ModelPrefixes.Any(g => g.Value == modelPrefix.Value))
             {
-                ms.AddModelError("Value", "This prefix is not unique.");
+                ms.AddModelError("Value", "Даний префікс назви не є унікальним");
                 ms["Value"].ValidationState = ModelValidationState.Invalid;
             }
         }

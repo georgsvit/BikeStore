@@ -8,12 +8,15 @@ namespace BikeStore.Models.Domain
     public class FrameSize
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "{0} is required")]
-        [StringLength(3, MinimumLength = 1, ErrorMessage = "{0} is too short or too long")]
+        [Display(Name = "Розмір")]
+        [Required(ErrorMessage = "{0} є необхідним")]
+        [StringLength(3, MinimumLength = 1, ErrorMessage = "{0} є занадто коротким або занадто великим")]
         public string Size { get; set; }
-        [Required(ErrorMessage = "{0} is required")]
+        [Display(Name = "Мінімальний зріст")]
+        [Required(ErrorMessage = "{0} є необхідним")]
         public int MinHeight { get; set; }
-        [Required(ErrorMessage = "{0} is required")]
+        [Display(Name = "Максимальний зріст")]
+        [Required(ErrorMessage = "{0} є необхідним")]
         public int MaxHeight { get; set; }
 
         public ICollection<Bike> Bike { get; set; }

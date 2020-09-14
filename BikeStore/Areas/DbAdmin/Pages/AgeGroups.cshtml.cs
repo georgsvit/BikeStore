@@ -52,7 +52,7 @@ namespace BikeStore.Areas.DbAdmin.Pages
                     await _context.SaveChangesAsync();
                 } else
                 {
-                    ModelState.AddModelError("Value", "This name is not unique.");
+                    ModelState.AddModelError("Value", "Дане ім'я не є унікальним");
                     ModelState["Value"].ValidationState = ModelValidationState.Invalid;
                 }      
             }
@@ -75,7 +75,7 @@ namespace BikeStore.Areas.DbAdmin.Pages
         {
             if (_context.AgeGroups.Any(g => g.Value == group.Value))
             {
-                ms.AddModelError("Value", "This name is not unique.");
+                ms.AddModelError("Value", "Дане ім'я не є унікальним");
                 ms["Value"].ValidationState = ModelValidationState.Invalid;
             }                            
         }

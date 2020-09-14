@@ -53,7 +53,7 @@ namespace BikeStore.Areas.DbAdmin.Pages
                 }
                 else
                 {
-                    ModelState.AddModelError("Place", "This place is not unique.");
+                    ModelState.AddModelError("Place", "Дане місце не є унікальним");
                     ModelState["Place"].ValidationState = ModelValidationState.Invalid;
                 }
             }
@@ -76,7 +76,7 @@ namespace BikeStore.Areas.DbAdmin.Pages
         {
             if (_context.StoringPlaces.Any(p => p.Place == storingPlace.Place))
             {
-                ms.AddModelError("Place", "This place is not unique.");
+                ms.AddModelError("Place", "Дане місце не є унікальним");
                 ms["Place"].ValidationState = ModelValidationState.Invalid;
             }
         }

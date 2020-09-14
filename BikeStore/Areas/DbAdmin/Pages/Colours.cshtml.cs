@@ -53,7 +53,7 @@ namespace BikeStore.Areas.DbAdmin.Pages
                 }
                 else
                 {
-                    ModelState.AddModelError("ColourValue", "This value is not unique.");
+                    ModelState.AddModelError("ColourValue", "Дане значення не є унікальним");
                     ModelState["ColourValue"].ValidationState = ModelValidationState.Invalid;
                 }
             }
@@ -76,7 +76,7 @@ namespace BikeStore.Areas.DbAdmin.Pages
         {
             if (_context.Colours.Any(c => c.ColourValue == colour.ColourValue))
             {
-                ms.AddModelError("ColourValue", "This value is not unique.");
+                ms.AddModelError("ColourValue", "Дане значення не є унікальним");
                 ms["ColourValue"].ValidationState = ModelValidationState.Invalid;
             }
         }

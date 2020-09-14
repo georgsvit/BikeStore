@@ -1,0 +1,76 @@
+﻿@model BikeStore.Models.Domain.Model
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Model</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="ModelName" class="control-label"></label>
+                <select asp-for="ModelNameId" class="form-control" asp-items="ViewBag.ModelNameId"></select>
+                <span asp-validation-for="ModelNameId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModelPrefix" class="control-label"></label>
+                <select asp-for="ModelPrefixId" class="form-control" asp-items="ViewBag.ModelPrefixId"></select>
+                <span asp-validation-for="ModelPrefixId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Year" class="control-label"></label>
+                <input asp-for="Year" class="form-control" />
+                <span asp-validation-for="Year" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WheelSize" class="control-label"></label>
+                <input asp-for="WheelSize" class="form-control" />
+                <span asp-validation-for="WheelSize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sex" class="control-label"></label>
+                <select asp-for="SexId" class="form-control" asp-items="ViewBag.SexId"></select>
+                <span asp-validation-for="SexId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AgeGroup" class="control-label"></label>
+                <select asp-for="AgeGroupId" class="form-control" asp-items="ViewBag.AgeGroupId"></select>
+                <span asp-validation-for="AgeGroupId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Suspension" class="control-label"></label>
+                <select asp-for="SuspensionId" class="form-control" asp-items="ViewBag.SuspensionId"></select>
+                <span asp-validation-for="SuspensionId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Details" asp-route-id="@Model.Id">Back to model</a>
+</div>
+

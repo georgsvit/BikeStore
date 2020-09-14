@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using BikeStore.Models.Domain;
 using BikeStore.Extensions;
 using BikeStore.Services;
+using System.Globalization;
 
 namespace BikeStore
 {
@@ -88,10 +89,6 @@ namespace BikeStore
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapAreaControllerRoute(
-                //    name: "Area",
-                //    areaName: nameof(Areas.Admin),
-                //    pattern: "{area:exists}/{controller=AgeGroups}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -99,6 +96,10 @@ namespace BikeStore
                 
             });
 
+            app.UseRequestLocalization();
+
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en");
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en");
         }
     }
 }

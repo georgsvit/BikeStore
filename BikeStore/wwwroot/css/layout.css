@@ -1,0 +1,23 @@
+﻿body {
+    background-color: #1b1b1b;
+    color: white;
+    font-size: 20px;
+}
+
+nav {
+    background-color: black;
+    height: 120px;
+}
+
+.nav-link {
+    font-size: 20px;
+}
+
+#logoutImg {
+    width: 30px; 
+    height: 30px;
+}
+
+hr{
+    
+}

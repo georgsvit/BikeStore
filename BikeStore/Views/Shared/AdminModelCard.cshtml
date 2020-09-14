@@ -1,0 +1,31 @@
+﻿@model AdminModel
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="card h-100 border-light" style="margin-left: 3%; background-color: #1b1b1b;">
+        @if (Model.Model.ModelColour.Count == 0)
+        {
+            <img placeholder="Зображення відсутнє" />
+        }
+        else
+        {
+            <img class="d-block img-fluid card-img-top" src=@Model.Model.ModelColour.ToList()[0].ImageLink>
+        }
+
+        <div class="card-body" style="font-size: 17px;">
+            <h4 class="card-title">
+                <a href="#">@Model.Model.FullName</a>
+            </h4>
+            <p>@("Кількість кольорових схем: " + Model.Model.ModelColour.Count)</p>
+            <p>@("Кількість велосипедів на складі: " + (Model.AllBikes))</p>
+            <p>@("Кількість зарезервованих велосипедів: " + Model.ReservedBikes)</p>
+        </div>
+        <hr class="border-light" />
+        <div class="card-footer">
+            <form id=@Model.Model.Id asp-controller="Models" asp-action="Details" asp-route-id="@Model.Model.Id" method="post">
+                <input type="hidden" asp-route-id="@Model.Model.Id" />
+                <button type="submit" class="btn btn-success btn-sm" style="position: relative; font-size: 20px; left: 30%;">
+                    Детальніше
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
