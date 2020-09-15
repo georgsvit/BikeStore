@@ -1,0 +1,67 @@
+﻿@model List<Item>
+
+<div class="p-5 text-light">
+    <div>
+        @if (Model.Count == 0)
+        {
+            <div class="text-center">
+                <h2>У кошику немає жодного товару!</h2>
+                <br />
+                <a class="btn btn-primary" href="@ViewBag.ReturnUrl">Продовжити покупки</a>
+            </div>
+        }
+        else
+        {
+            <div class="text-center">
+                <h2>Ваш кошик</h2>
+
+                <table class="table table-bordered table-striped text-light" style="font-size: 20px;">
+                    <thead>
+                        <tr>
+                            <th>Кількість</th>
+                            <td>Зображення</td>
+                            <th>Товар</th>
+                            <th>Розмір</th>
+                            <th class="text-right">Ціна</th>
+                            <th class="text-right">Разом</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">@item.Quantity</td>
+                                <td><img src="@item.ModelColour.ImageLink" style="width: 50%;" class="card-img-top" /></td>
+                                <td class="text-left">@item.Model.FullName</td>
+                                <td class="text-center">@item.FrameSize.Size</td>
+                                <td class="text-right">@item.Model.Price.ToString("c")</td>
+                                <td class="text-right">
+                                    @((item.Quantity * item.Model.Price).ToString("c"))
+                                </td>
+                                <td>
+                                    <form asp-action="Remove" method="post">
+                                        <input type="hidden" asp-for="@item.ModelColour.Id" name="Id" />
+                                        <input type="hidden" asp-for="@item.FrameSize.Id" name="sizeId" />
+                                        <input type="hidden" value="@ViewBag.ReturnUrl" name="ReturnUrl" />
+                                        <button type="submit" class="btn btn-danger btn-sm">Видалити з кошику</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-right">Загалом:</td>
+                            <td class="text-right">
+                                @ViewBag.Total.ToString("c")
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <a class="btn btn-primary" href="@ViewBag.ReturnUrl" style="margin-right: 25px;">Продовжити покупки</a>
+                <a class="btn btn-success" asp-action="Checkout" asp-controller="Order">Замовити</a>
+            </div>
+        }
+
+    </div>
+</div>

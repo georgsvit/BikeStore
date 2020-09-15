@@ -17,6 +17,7 @@ namespace BikeStore.Models.Domain
         [StringLength(10000, MinimumLength = 3, ErrorMessage = "{0} є занадто коротким або занадто великим")]
         public string Description { get; set; }
 
+        [JsonIgnore]
         public ICollection<Model> Model { get; set; }
 
         public override bool Equals(object obj)

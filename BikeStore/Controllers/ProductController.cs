@@ -114,7 +114,6 @@ namespace BikeStore.Controllers
             return View(models);
         }
     
-    
         public async Task<IActionResult> ProductDetails(int? id, string returnUrl)
         {
             if (id == null)
@@ -152,8 +151,8 @@ namespace BikeStore.Controllers
                 for (int i = 0; i < c.Value.Count; i++)
                 {
                     if (c.Value[i] != 0)
-                    {
-                        availableBikes.Add(new SelectListItem(c.Key + " " + sizes[i], _context.ModelColours.FirstOrDefault(mc => mc.Colour.ColourValue == c.Key && mc.ModelId == id).Id + " " + (i + 1) + " " + c.Value[i]));
+                    {                        
+                        availableBikes.Add(new SelectListItem(c.Key + " " + sizes[i], _context.ModelColours.FirstOrDefault(mc => mc.Colour.ColourValue == c.Key && mc.ModelId == id).Id + " " + _context.FrameSizes.FirstOrDefault(fs => fs.Size == sizes[i]).Id + " " + c.Value[i]));
                     }
                 }
             }

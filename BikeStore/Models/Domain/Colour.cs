@@ -13,6 +13,7 @@ namespace BikeStore.Models.Domain
         [StringLength(25, MinimumLength = 3, ErrorMessage = "Значення {0}у є занадто коротким або занадто великим")]
         public string ColourValue { get; set; }
 
+        [JsonIgnore]
         public ICollection<ModelColour> ModelColour { get; set; }
 
         public override bool Equals(object obj)

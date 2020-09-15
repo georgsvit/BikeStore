@@ -60,7 +60,7 @@ namespace BikeStore
                 services.Configure<SmtpSettings>(Configuration.GetSection("SmtpReleaseSettings"));
             }
             services.AddMailer();
-
+            services.AddSession();
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
         }
 
@@ -81,7 +81,7 @@ namespace BikeStore
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();

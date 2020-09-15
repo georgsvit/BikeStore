@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace BikeStore.Models.Domain
 {
@@ -28,7 +29,9 @@ namespace BikeStore.Models.Domain
         public int ModelColourId { get; set; }
         public ModelColour ModelColour { get; set; }
         //
+        [JsonIgnore]
         public ICollection<OrderDetail> OrderDetail { get; set; }
+        [JsonIgnore]
         public ICollection<SupplyDetail> SupplyDetail { get; set; }
     }
 }

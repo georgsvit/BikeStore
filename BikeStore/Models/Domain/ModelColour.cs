@@ -14,6 +14,7 @@ namespace BikeStore.Models.Domain
         [DataType(DataType.ImageUrl)]
         public string ImageLink { get; set; }
         //
+        [JsonIgnore]
         public Model Model { get; set; }
         [Required(ErrorMessage = "Будь ласка оберіть модель")]
         public int ModelId { get; set; }
@@ -22,6 +23,7 @@ namespace BikeStore.Models.Domain
         [Required(ErrorMessage = "Будь ласка оберіть колір")]
         public int ColourId { get; set; }
         //
+        [JsonIgnore]
         public ICollection<Bike> Bike { get; set; }
 
         public List<int> FrameGetter(Dictionary<string, int> sizes)

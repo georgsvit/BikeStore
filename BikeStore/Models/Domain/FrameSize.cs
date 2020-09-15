@@ -19,6 +19,7 @@ namespace BikeStore.Models.Domain
         [Required(ErrorMessage = "{0} є необхідним")]
         public int MaxHeight { get; set; }
 
+        [JsonIgnore]
         public ICollection<Bike> Bike { get; set; }
 
         public override bool Equals(object obj)

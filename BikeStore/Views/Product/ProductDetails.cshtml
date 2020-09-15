@@ -128,7 +128,7 @@
         </div>
 
         <div align="center">
-            <form class="form-inline" style="position: relative; left: 30%;" asp-action="" asp-controller="">
+            <form class="form-inline" style="position: relative; left: 30%;" asp-action="Buy" asp-controller="Cart">
                 <input type="hidden" name="modelId" value=@Model.Id />
                 <select class="rounded" style="width: 200px; height:37px;" name="info" id="Select" asp-items=@ViewBag.AvailableBikes onchange="ChangeMaxValue()"></select>
                 <input type="number" class="input-group-append" name="itemsAmount" style="width: 70px; height: 37px; margin: 25px;" id="itemsAmount" max="" value="1" min="1" />
@@ -136,19 +136,6 @@
                 <input type="submit" class="btn btn-success" value="Додати до кошика" />
             </form>
         </div>
-
-    </div>
-    <hr class="border-light" />
-    <br />
-    <div>
-        <h3>Вас також можуть зацікавити наступні моделі</h3>
-        <br />
-        @*<div class="row">
-            @foreach (Model m in ViewBag.Recommendation)
-            {
-                @Html.Partial("ModelCardSmall", m);
-            }
-        </div>*@
 
     </div>
     <script type="text/javascript">
