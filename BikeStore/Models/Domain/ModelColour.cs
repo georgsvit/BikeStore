@@ -26,9 +26,12 @@ namespace BikeStore.Models.Domain
 
         public List<int> FrameGetter(Dictionary<string, int> sizes)
         {
-            foreach (Bike b in Bike)
+            if (Bike != null)
             {
-                if (b.StatusId == 1) sizes[b.FrameSize.Size]++;
+                foreach (Bike b in Bike)
+                {
+                    if (b.StatusId == 1) sizes[b.FrameSize.Size]++;
+                }
             }
 
             return sizes.Values.ToList();            

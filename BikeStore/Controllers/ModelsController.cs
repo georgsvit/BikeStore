@@ -61,7 +61,7 @@ namespace BikeStore.Controllers
             if (model.ModelColour != null)
             {
                 model.ModelColour.ToList().ForEach(mc => ColourAndSizes.Add(mc.Colour.ColourValue, mc.FrameGetter(_context.FrameSizes.Select(f => f.Size).ToList().ToDictionary(x => x, x => int.Parse("0")))));
-                bikes = model.ModelColour.ToList().Select(mc => mc.Bike).ToList().Aggregate((r, l) => r.Union(l).ToList()).ToList(); 
+                bikes = model.ModelColour.ToList().Select(mc => mc.Bike ?? new List<Bike>() { }).ToList().Aggregate((r, l) => r.Union(l).ToList()).ToList(); 
             }
             
             ViewData["ColoursAndSizes"] = ColourAndSizes;

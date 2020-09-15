@@ -1,0 +1,55 @@
+﻿@model List<Model>
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="container-fluid text-light">
+    <h1>Велосипеди</h1>
+    <br />
+    <form asp-action="Index" asp-controller="Product">
+        <div class="form-row">
+            <div class="">
+                <p>
+                    <input type="text" class="rounded" style="width: 200px; height:37px; position:relative; top: 3px; margin-right: 15px;" name="SearchString" placeholder="ВВЕДІТЬ НАЗВУ" />
+                    <input type="submit" value="Знайти" class="btn btn-primary" />
+                </p>
+            </div>
+            <div style="margin-left: 43%;">
+                <select class="rounded" style="width: 200px; height:37px; position:relative; top: 3px; margin-right: 15px;" name="SortString"></select>
+                <button class="btn btn-success" type="submit">Сортувати</button>
+            </div>
+        </div>
+    </form>
+
+    <hr class="border-light" />
+
+    <div class="row">
+        <div class="col-3">
+            <h3>text</h3>
+        </div>
+        <div class="col-9">
+            <div class="row">
+                @if (Model.Count == 0)
+                {
+                    <div class="col-12 mt-5" align="center">
+                        <h2>За запитом нічого не знайдено(</h2>
+                    </div>
+                }
+                else
+                {
+                    @foreach (var m in Model)
+                    {
+                        <partial name="ProductModelCard" model="m" />
+                        //@Html.Partial("ModelCard", m);
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="justify-content-center form-group form-inline">
+        <page-link page-view-model="ViewBag.PageViewModel" page-action="Index"></page-link>
+    </div>
+
+</div>
+

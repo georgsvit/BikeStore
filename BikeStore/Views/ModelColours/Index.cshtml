@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<BikeStore.Models.Domain.ModelColour>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Colour schemes";
 }
 
-<h1>Index</h1>
+<h1>Кольорові схеми</h1>
 
 
 @if (Model.Count() == 0)
@@ -13,40 +13,34 @@
 }
 else
 {
-<p>
-    <a asp-action="Create" asp-route-modelId="@ViewBag.ModelId">Create New</a>
-    <a asp-action="Details" asp-controller="Models" asp-route-id="@ViewBag.ModelId">Go to model</a>
-</p>
-
-    <table class="table">
-        <thead>
+    <table class="table table-bordered table-sm table-striped text-light text-center">
+        <tr>
+            <th>Зображення</th>
+            <th>Колір</th>
+            <th>Дії</th>
+        </tr>
+        @foreach (var cs in Model)
+        {
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ImageLink)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Colour)
-                </th>
-                <th></th>
+                <td><img class="d-block img-fluid card-img-top" src=@cs.ImageLink style="width: 50%;" /></td>
+                <td style="width: 30%;">@cs.Colour.ColourValue</td>
+                <td>
+                    <form asp-action="Delete" asp-route-productId="@cs.Id" method="post">
+                        <a asp-action="Edit" class="btn btn-sm btn-warning"
+                           asp-route-id="@cs.Id">
+                            Редагувати
+                        </a>
+                        <input type="hidden" asp-for="@cs.Id" name="Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Видалити
+                        </button>
+                    </form>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        <img src="@item.ImageLink"  />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Colour.ColourValue)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
+        }
     </table>
+    <div class="text-center">
+        <a asp-action="Create" asp-route-modelId="@ViewBag.ModelId" class="btn btn-primary">Створити</a>
+        <a asp-action="Details" asp-controller="Models" asp-route-id=@ViewBag.ModelId class="btn btn-secondary">До моделі</a>
+    </div>
 }

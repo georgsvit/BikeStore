@@ -1,0 +1,26 @@
+﻿@model Model
+<div class="col-lg-6 mb-4 col-md-6 mb-6">
+    <div class="card h-100 border-light" style="margin-left: 3%; background-color: #1b1b1b;">
+        <img class="d-block img-fluid card-img-top" src=@Model.ModelColour.ToList()[0].ImageLink>
+
+        <div class="card-body" style="font-size: 17px;">
+            <h4 class="card-title">
+                @Model.FullName
+            </h4>
+            <br />
+            <p>@("Стать: " + Model.Sex.Value)</p>
+            <p>@("Колекція: " + Model.Year)</p>
+            <h5>@Model.Price.ToString("c")</h5>
+        </div>
+        <hr class="border-light" />
+        <div class="card-footer">
+            <form id=@Model.Id asp-controller="Home" asp-action="Product" method="post" asp-route-id="@Model.Id">
+                <input type="hidden" asp-for="Id" value=@Model.Id />
+                <button type="submit" class="btn btn-success btn-sm" style="position: relative; font-size: 20px; top: -8px; left: 30%;">
+                    Детальніше
+                </button>
+            </form>
+
+        </div>
+    </div>
+</div>
