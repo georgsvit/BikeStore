@@ -14,7 +14,7 @@
         </div>
         <hr class="border-light" />
         <div class="card-footer">
-            <form id=@Model.Id asp-controller="Home" asp-action="Product" method="post" asp-route-id="@Model.Id">
+            <form id=@Model.Id asp-controller="Product" asp-action="ProductDetails" method="post" asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()" asp-route-id="@Model.Id">
                 <input type="hidden" asp-for="Id" value=@Model.Id />
                 <button type="submit" class="btn btn-success btn-sm" style="position: relative; font-size: 20px; top: -8px; left: 30%;">
                     Детальніше

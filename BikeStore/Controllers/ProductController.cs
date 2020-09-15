@@ -14,7 +14,7 @@ namespace BikeStore.Controllers
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private int itemsPerPage = 2;
+        private readonly int _itemsPerPage = 6;
 
         public ProductController(ApplicationDbContext context)
         {
@@ -30,18 +30,23 @@ namespace BikeStore.Controllers
                                                int lowPriceBorder, int highPriceBorder, 
                                                string searchString, int page = 1, SortState sortOrder = SortState.NameAsc)
         {
-            List<Model> models = await _context.Models.ToListAsync();
+            List<Model> models = await _context.Models
+                .Include(m => m.AgeGroup)
+                .Include(m => m.Category)
+                .Include(m => m.ModelName)
+                .Include(m => m.ModelPrefix)
+                .Include(m => m.Sex)
+                .Include(m => m.Suspension)
+                .ToListAsync();
 
-            var modelColours = await _context.ModelColours.ToListAsync();
-            await _context.Sexes.ToListAsync();
-            await _context.ModelNames.ToListAsync();
-            await _context.ModelPrefixes.ToListAsync();
-            await _context.Bikes.ToListAsync();
-            await _context.Colours.ToListAsync();            
+            var modelColours = await _context.ModelColours.Include(mc => mc.Colour).ToListAsync();         
+            await _context.Bikes.Include(b => b.FrameSize).Include(b => b.Status).Include(b => b.StoringPlace).ToListAsync();
 
             // Get models which are on stock
             var modelColoursId = modelColours.Where(mc => mc.Bike != null).Select(mc => mc.Id).ToList();
             models = models.Where(m => m.ModelColoursId.Intersect(modelColoursId).Count() != 0).ToList();
+
+            #region Filter
 
             // Filter
             if (selectedCategories.Count != 0) models = models.Where(m => selectedCategories.Any(id => m.CategoryId == id)).ToList();
@@ -53,6 +58,8 @@ namespace BikeStore.Controllers
 
             highPriceBorder = (highPriceBorder == 0 && models.Count != 0) ? models.Max(m => (int)m.Price) : highPriceBorder;
             models = models.Where(m => m.Price >= lowPriceBorder && m.Price <= highPriceBorder).ToList();
+
+            #endregion
 
             // Search by name
             if (!String.IsNullOrEmpty(searchString))
@@ -91,9 +98,9 @@ namespace BikeStore.Controllers
 
             // Pagination
             int modelsCount = models.Count;
-            models = models.Skip((page - 1) * itemsPerPage).Take(itemsPerPage).ToList();
+            models = models.Skip((page - 1) * _itemsPerPage).Take(_itemsPerPage).ToList();
             
-            ViewData["PageViewModel"] = new PageViewModel(modelsCount, page, itemsPerPage);
+            ViewData["PageViewModel"] = new PageViewModel(modelsCount, page, _itemsPerPage);
             ViewData["FilterViewModel"] = new FilterViewModel(await _context.Categories.ToListAsync(), selectedCategories,
                                                               await _context.Suspensions.ToListAsync(), selectedSuspensions,
                                                               await _context.Sexes.ToListAsync(), selectedSexes,
@@ -101,10 +108,62 @@ namespace BikeStore.Controllers
                                                               await _context.Models.Select(m => m.Year).Distinct().ToListAsync(), selectedYears,
                                                               await _context.Models.Select(m => m.WheelSize).Distinct().ToListAsync(), selectedWheels,
                                                               lowPriceBorder, 
-                                                              (highPriceBorder == 0 && models.Count != 0) ? models.Max(m => (int)m.Price) : highPriceBorder,
+                                                              (models.Count != 0) ? models.Max(m => (int)m.Price) : highPriceBorder,
                                                               searchString);
 
             return View(models);
+        }
+    
+    
+        public async Task<IActionResult> ProductDetails(int? id, string returnUrl)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Model model = await _context.Models
+                .Include(m => m.AgeGroup)
+                .Include(m => m.Category)
+                .Include(m => m.ModelName)
+                .Include(m => m.ModelPrefix)
+                .Include(m => m.Sex)
+                .Include(m => m.Suspension)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            await _context.ModelColours.Include(mc => mc.Colour).ToListAsync();                                    
+            await _context.Bikes.Include(b => b.FrameSize).Include(b => b.Status).Include(b => b.StoringPlace).ToListAsync();                       
+
+            Dictionary<string, List<int>> ColourAndSizes = new Dictionary<string, List<int>>() { };
+
+            model.ModelColour.ToList().ForEach(mc => ColourAndSizes.Add(mc.Colour.ColourValue, mc.FrameGetter(_context.FrameSizes.Select(f => f.Size).ToList().ToDictionary(x => x, x => int.Parse("0")))));
+
+            List<SelectListItem> availableBikes = new List<SelectListItem>() { };
+
+            List<string> sizes = await _context.FrameSizes.Select(fs => fs.Size).ToListAsync();
+
+            foreach (var c in ColourAndSizes)
+            {
+                for (int i = 0; i < c.Value.Count; i++)
+                {
+                    if (c.Value[i] != 0)
+                    {
+                        availableBikes.Add(new SelectListItem(c.Key + " " + sizes[i], _context.ModelColours.FirstOrDefault(mc => mc.Colour.ColourValue == c.Key && mc.ModelId == id).Id + " " + (i + 1) + " " + c.Value[i]));
+                    }
+                }
+            }
+
+            ViewData["ReturnUrl"] = returnUrl;
+            ViewData["AvailableBikes"] = availableBikes;
+            ViewData["FrameSizes"] = sizes;
+            ViewData["ColoursAndSizes"] = ColourAndSizes;
+
+            return View(model);
         }
     }
 }
