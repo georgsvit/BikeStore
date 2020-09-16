@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BikeStore.Data;
 using BikeStore.Models.Domain;
+using BikeStore.Models.View;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -87,5 +88,31 @@ namespace BikeStore.Controllers
         }
 
         #endregion
+
+        public async Task<IActionResult> SupplyHistory()
+        {
+            List<SupplyHeader> headers = await _context.SupplyHeaders.ToListAsync();
+
+            List<SupplyViewModel> supplies = new List<SupplyViewModel>() { };
+
+            foreach (var sh in headers)
+            {
+                SupplyViewModel supply = new SupplyViewModel
+                {
+                    supplyHeader = sh,
+                    supplyDetails = await _context.SupplyDetails.Where(x => x.SupplyHeaderId == sh.Id).ToListAsync()
+                };
+                supplies.Add(supply);
+            }
+
+            await _context.Bikes.ToListAsync();
+            await _context.Models.ToListAsync();
+            await _context.ModelColours.ToListAsync();
+            await _context.FrameSizes.ToListAsync();
+            await _context.Colours.ToListAsync();
+            await _context.Users.ToListAsync();
+
+            return View(supplies);
+        }
     }
 }

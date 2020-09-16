@@ -1,0 +1,48 @@
+﻿@model List<SupplyViewModel>
+<div>
+    @if (Model.Count != 0)
+    {
+        <div style="margin-left: 10%;" class="text-light">
+            <h2>Історія поставок</h2>
+            <div class="row">
+                @foreach (var supply in Model)
+                {
+                    <div class="card col-lg-5 col-md-5 mb-6 border-white" style="background-color: #1b1b1b; position: relative; left: 8%; margin: 15px;">
+                        <p>Номер поставки: @supply.supplyHeader.Id</p>
+                        <p>Постачальник: @(supply.supplyHeader.Provider)</p>
+                        <p>Прийняв: @(supply.supplyHeader.Recipient.FirstName + " " + supply.supplyHeader.Recipient.LastName)</p>
+                        <p>Дата поставки: @supply.supplyHeader.CreationDate</p>
+                        <br />
+                        <details>
+                            <summary>Поставлені велосипеди</summary>
+                            @foreach (var sd in supply.supplyDetails)
+                            {
+                                <div class="">
+                                    <br />
+                                    <hr class="border-light" />
+                                    <p>Name: @sd.Bike.ModelColour.Model.FullNameWithYear</p>
+                                    <p>Номер рами: @sd.Bike.FrameNumber</p>
+                                    <p>Розмір: @sd.Bike.FrameSize.Size</p>
+                                    <p>Колір: @sd.Bike.ModelColour.Colour.ColourValue</p>
+                                    <p>Price: @sd.Bike.ModelColour.Model.Price.ToString("c")</p>
+                                    <hr class="border-light" />
+                                </div>
+                            }
+                        </details>
+                        <br />
+                    </div>
+                }
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="text-center text-light">
+            <h2>Упс!</h2>
+            <p>Ще не було прийнято жодної поставки</p>
+        </div>
+    }
+
+
+</div>
