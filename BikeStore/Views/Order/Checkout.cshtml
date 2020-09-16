@@ -1,0 +1,30 @@
+﻿@model OrderHeader
+
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="text-light">
+            <h2>Оформлення замовлення</h2>
+            <p>Будь ласка оберіть спосіб доставки обраних товарів</p>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <form asp-action="Checkout" method="post">                
+                <div id="address">
+                    <input asp-for="ShippingAddress" class="form-control rounded" placeholder="Адреса" />
+                </div>
+                <br />
+                <div class="text-center">
+                    <input class="btn btn-primary" type="submit" value="Замовити" />
+                </div>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div class="text-center text-light">
+            <h2>Упс!</h2>
+            <p>Ви ще не пройшли автентифікацію на сайті</p>
+            <p>Будь ласка увійдіть/зареєструйтесь на сайті</p>
+            <a class="btn btn-success" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@ViewContext.HttpContext.Request.PathAndQuery()">Увійти</a>
+        </div>
+    }
+</div>
