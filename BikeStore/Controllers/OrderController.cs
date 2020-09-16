@@ -6,18 +6,22 @@ using BikeStore.Data;
 using BikeStore.Extensions;
 using BikeStore.Models.Cart;
 using BikeStore.Models.Domain;
+using BikeStore.Services;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BikeStore.Controllers
 {
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMailer _mailer;
 
-        public OrderController(ApplicationDbContext context)
+        public OrderController(ApplicationDbContext context, IMailer mailer)
         {
             _context = context;
+            _mailer = mailer;
         }
 
         public IActionResult Checkout() => View(new OrderHeader());
@@ -45,6 +49,7 @@ namespace BikeStore.Controllers
                         await _context.SaveChangesAsync();
                     }
                 }
+                await _mailer.SendOrderDetails(User.Identity.Name.ToLower(), cart);
                 return RedirectToAction("CompletedOrder");
             }
             else

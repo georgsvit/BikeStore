@@ -46,15 +46,9 @@ namespace BikeStore.Controllers
                 return NotFound();
             }
 
-            List<Item> cart;
+            List<Item> cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
 
-            if (SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart") == null)
-            {
-                cart = new List<Item>();
-            } else
-            {
-                cart = SessionHelper.GetObjectFromJson<List<Item>>(HttpContext.Session, "cart");
-            }
+            cart ??= new List<Item>();
 
             int[] arr = info.Split(" ").Select(x => Convert.ToInt32(x)).ToArray();
 

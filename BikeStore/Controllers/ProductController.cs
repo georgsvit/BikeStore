@@ -43,9 +43,10 @@ namespace BikeStore.Controllers
             await _context.Bikes.Include(b => b.FrameSize).Include(b => b.Status).Include(b => b.StoringPlace).ToListAsync();
 
             // Get models which are on stock
-            var modelColoursId = modelColours.Where(mc => mc.Bike != null).Select(mc => mc.Id).ToList();
-            models = models.Where(m => m.ModelColoursId.Intersect(modelColoursId).Count() != 0).ToList();
-
+            var modelColoursId = modelColours.Where(mc => mc.Bike != null && mc.Bike.Where(b => b.Status.Id != 2).Count() != 0).Select(mc => mc.Id).ToList();
+            
+            models = models.Where(m => m.ModelColoursId.Intersect(modelColoursId).Count() > 0).ToList();
+            
             #region Filter
 
             // Filter
@@ -56,8 +57,8 @@ namespace BikeStore.Controllers
             if (selectedYears.Count != 0) models = models.Where(m => selectedYears.Any(y => m.Year == y)).ToList();
             if (selectedWheels.Count != 0) models = models.Where(m => selectedWheels.Any(ws => m.WheelSize == ws)).ToList();
 
-            highPriceBorder = (highPriceBorder == 0 && models.Count != 0) ? models.Max(m => (int)m.Price) : highPriceBorder;
-            models = models.Where(m => m.Price >= lowPriceBorder && m.Price <= highPriceBorder).ToList();
+            highPriceBorder = (highPriceBorder == 0 && models.Count != 0) ? models.Max(m => (int)m.Price) : highPriceBorder;            
+            models = models.Where(m => (int)m.Price >= lowPriceBorder && (int)m.Price <= highPriceBorder).ToList();
 
             #endregion
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BikeStore.Data;
 using BikeStore.Models.Domain;
 using BikeStore.Models.View;
+using BikeStore.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,12 @@ namespace BikeStore.Controllers
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMailer _mailer;
 
-        public AdminController(ApplicationDbContext context)
+        public AdminController(ApplicationDbContext context, IMailer mailer)
         {
             _context = context;
+            _mailer = mailer;
         }
 
         public IActionResult Index()
@@ -141,5 +144,17 @@ namespace BikeStore.Controllers
             return View(supplies);
         }
 
+        public IActionResult CreateMailing() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> CreateMailing(string text)
+        {
+            if (!String.IsNullOrEmpty(text)) {
+                var emails = await _context.Users.Where(u => u.Mailing).Select(u => u.Email).ToListAsync();
+                await _mailer.SendNews(emails, text);
+                return RedirectToAction("Index");
+            }
+            return View("CreateMailing", new { text });
+        }
     }
 }

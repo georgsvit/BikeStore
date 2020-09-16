@@ -1,0 +1,15 @@
+﻿@model string
+<div class="text-light">
+    <h3>Створення E-mail розсилки</h3>
+    <br />
+    <div class="container-fluid">
+        <form asp-action="CreateMailing" asp-controller="Admin">
+            <h3 class="mb-3">Текст Email</h3>
+
+            <textarea class="col-md-9" type="text" name="text"></textarea>
+            <br />
+            <input class="btn btn-success" type="submit" />
+        </form>
+    </div>
+
+</div>
