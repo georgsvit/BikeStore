@@ -114,5 +114,32 @@ namespace BikeStore.Controllers
 
             return View(supplies);
         }
+
+        public async Task<IActionResult> OrderHistory()
+        {
+            List<OrderHeader> headers = await _context.OrderHeaders.ToListAsync();
+
+            List<OrderViewModel> supplies = new List<OrderViewModel>() { };
+
+            foreach (var sh in headers)
+            {
+                OrderViewModel supply = new OrderViewModel
+                {
+                    orderHeader = sh,
+                    orderDetails = await _context.OrderDetails.Where(x => x.OrderHeaderId == sh.Id).ToListAsync()
+                };
+                supplies.Add(supply);
+            }
+
+            await _context.Bikes.ToListAsync();
+            await _context.Models.ToListAsync();
+            await _context.ModelColours.ToListAsync();
+            await _context.FrameSizes.ToListAsync();
+            await _context.Colours.ToListAsync();
+            await _context.Users.ToListAsync();
+
+            return View(supplies);
+        }
+
     }
 }

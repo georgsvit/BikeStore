@@ -1,0 +1,53 @@
+﻿@model List<OrderViewModel>
+
+<div>
+    @if (Model.Count != 0)
+    {
+        <div>
+            <h2 class="text-light">Усі замовлення</h2>
+            <br />
+            <hr class="border-light" />
+            <div class="text-light row" align="center">
+                @foreach (var order in Model)
+                {
+                    <div class="card col-lg-3 col-md-3 mb-4 border-white" style="background-color: #1b1b1b; position: relative; left: 8%; margin: 15px;">
+                        <br />
+                        <h5>Замовлення номер: @order.orderHeader.Id</h5>
+                        <br />
+                        <p>Дата заказу: @order.orderHeader.CreationDate</p>
+                        <p>Адреса доставки: @order.orderHeader.ShippingAddress</p>
+                        <p>Сума заказу: @order.orderDetails.Sum(x => x.Bike.ModelColour.Model.Price).ToString("c")</p>                       
+                        <br />
+                        <details>
+                            <summary>Замовлені велосипеди</summary>
+                            <hr class="border-light" />
+                            @foreach (var od in order.orderDetails)
+                            {
+                                <br />
+                                <div class="card" style="background-color: #1b1b1b;">
+                                    <p><span class="font-weight-bold">Назва:</span> @od.Bike.ModelColour.Model.FullName</p>
+                                    <p><span class="font-weight-bold">Номер рами:</span> @od.Bike.FrameNumber</p>
+                                    <p><span class="font-weight-bold">Розмір:</span> @od.Bike.FrameSize.Size</p>
+                                    <p><span class="font-weight-bold">Колір:</span> @od.Bike.ModelColour.Colour.ColourValue</p>
+                                    <p><span class="font-weight-bold">Ціна:</span> @od.Bike.ModelColour.Model.Price.ToString("c")</p>
+                                </div>
+                                <hr class="border-light" />
+                            }
+                        </details>
+                        <br />
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <h2 class="text-light">Упс!</h2>
+            <p class="text-light">Ще не було зроблено жодного замовлення</p>
+        </div>
+    }
+
+
+</div>
+
