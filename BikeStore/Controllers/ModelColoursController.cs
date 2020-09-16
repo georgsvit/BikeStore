@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BikeStore.Data;
 using BikeStore.Models.Domain;
+using BikeStore.Attributes;
 
 namespace BikeStore.Controllers
 {
+    [NotForCustomer]
     public class ModelColoursController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -46,6 +46,7 @@ namespace BikeStore
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireUppercase = true;
             })
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BikeStore.Attributes;
 using BikeStore.Data;
 using BikeStore.Models.Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BikeStore.Areas.DbAdmin.Pages
 {
+    [ForAdmin]
     public class StatusesModel : PageModel
     {
         private readonly ApplicationDbContext _context;

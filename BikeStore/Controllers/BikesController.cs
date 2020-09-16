@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using BikeStore.Data;
 using BikeStore.Models.Domain;
 using Microsoft.AspNetCore.Http.Extensions;
+using BikeStore.Attributes;
 
 namespace BikeStore.Controllers
 {
+    [NotForCustomer]
     public class BikesController : Controller
     {
         private readonly ApplicationDbContext _context;

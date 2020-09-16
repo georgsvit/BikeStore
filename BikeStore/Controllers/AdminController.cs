@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BikeStore.Attributes;
 using BikeStore.Data;
 using BikeStore.Models.Domain;
 using BikeStore.Models.View;
@@ -12,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BikeStore.Controllers
 {
+    [NotForCustomer]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
