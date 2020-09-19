@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BikeStore.Attributes;
+using BikeStore.Data;
+using BikeStore.Models.Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using BikeStore.Data;
-using BikeStore.Models.Domain;
-using Microsoft.AspNetCore.Http.Extensions;
-using BikeStore.Attributes;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BikeStore.Controllers
 {
@@ -29,7 +27,7 @@ namespace BikeStore.Controllers
             await _context.Colours.ToListAsync();
             await _context.ModelPrefixes.ToListAsync();
             await _context.ModelNames.ToListAsync();
-            return modelColours.Select(mc => mc.Id == id 
+            return modelColours.Select(mc => mc.Id == id
                                             ? new SelectListItem(mc.Model.FullNameWithYear + " " + mc.Colour.ColourValue, mc.Id.ToString(), true)
                                             : new SelectListItem(mc.Model.FullNameWithYear + " " + mc.Colour.ColourValue, mc.Id.ToString(), false))
                                             .ToList();
@@ -63,12 +61,12 @@ namespace BikeStore.Controllers
             if (ModelState.IsValid)
             {
                 await _context.Bikes.AddAsync(bike);
-                await _context.SaveChangesAsync(); 
-                
+                await _context.SaveChangesAsync();
+
                 int supplyHeaderId = int.Parse(returnUrl.Split('=')[1]);
                 await _context.SupplyDetails.AddAsync(new SupplyDetail() { SupplyHeaderId = supplyHeaderId, BikeId = bike.Id });
                 await _context.SaveChangesAsync();
-                return Redirect(returnUrl);                
+                return Redirect(returnUrl);
             }
             ViewData["ReturnUrl"] = returnUrl;
             ViewData["FrameSizeId"] = new SelectList(_context.FrameSizes, "Id", "Size", bike.FrameSizeId);
@@ -137,7 +135,7 @@ namespace BikeStore.Controllers
             ViewData["StatusId"] = new SelectList(_context.Statuses, "Id", "Description", bike.StatusId);
             ViewData["StoringPlaceId"] = new SelectList(_context.StoringPlaces, "Id", "Place", bike.StoringPlaceId);
             return View(bike);
-        }        
+        }
 
         // POST: Bikes/Delete/5
         [HttpPost, ActionName("Delete")]

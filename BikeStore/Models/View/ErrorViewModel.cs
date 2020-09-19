@@ -1,5 +1,3 @@
-using System;
-
 namespace BikeStore.Models
 {
     public class ErrorViewModel

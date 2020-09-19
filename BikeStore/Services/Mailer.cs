@@ -1,11 +1,9 @@
 ﻿using BikeStore.Models.Cart;
-using BikeStore.Models.View;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BikeStore.Services
@@ -145,7 +143,7 @@ namespace BikeStore.Services
                     $"</body>" +
                     $"</html>"
                 };
-                
+
                 using (var client = new SmtpClient())
                 {
                     client.ServerCertificateValidationCallback = (s, c, h, e) => true;
@@ -193,7 +191,7 @@ namespace BikeStore.Services
 
                     throw new InvalidOperationException(e.Message);
                 }
-            }            
+            }
         }
     }
 }

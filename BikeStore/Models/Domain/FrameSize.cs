@@ -28,8 +28,8 @@ namespace BikeStore.Models.Domain
 
             FrameSize size = (FrameSize)obj;
             return (
-                this.Size == size.Size && 
-                this.MinHeight == size.MinHeight && 
+                this.Size == size.Size &&
+                this.MinHeight == size.MinHeight &&
                 this.MaxHeight == size.MaxHeight);
         }
 

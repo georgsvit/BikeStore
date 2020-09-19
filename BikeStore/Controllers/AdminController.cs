@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BikeStore.Attributes;
+﻿using BikeStore.Attributes;
 using BikeStore.Data;
 using BikeStore.Models.Domain;
 using BikeStore.Models.View;
@@ -10,6 +6,10 @@ using BikeStore.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BikeStore.Controllers
 {
@@ -50,9 +50,7 @@ namespace BikeStore.Controllers
 
         public IActionResult CreateSupply()
         {
-            var items = _context.Users.Select(u => u.Id).ToList();
-            // TODO: add 'only for staff' filter
-            ViewData["Staff"] = _context.Users.Select(u => new SelectListItem(u.GetFullName, u.Id));
+            ViewData["Staff"] = _context.Users.FirstOrDefault(u => u.Email == User.Identity.Name);
             return View();
         }
 
@@ -68,7 +66,7 @@ namespace BikeStore.Controllers
                 return RedirectToAction("SupplyBikes", "Admin", new { headerid = header.Id });
             }
             ViewData["Staff"] = new SelectList(_context.Users, "Id", "GetFullName", header.RecipientId);
-            return View("CreateSupply", header);       
+            return View("CreateSupply", header);
         }
 
         public async Task<IActionResult> SupplyBikes(int? headerId)
@@ -86,7 +84,7 @@ namespace BikeStore.Controllers
                 .Include(b => b.StoringPlace)
                 .ToListAsync();
 
-            
+
             _context.Colours.ToList();
 
             return View(bikes);
@@ -151,7 +149,8 @@ namespace BikeStore.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMailing(string text)
         {
-            if (!String.IsNullOrEmpty(text)) {
+            if (!String.IsNullOrEmpty(text))
+            {
                 var emails = await _context.Users.Where(u => u.Mailing).Select(u => u.Email).ToListAsync();
                 await _mailer.SendNews(emails, text);
                 return RedirectToAction("Index");

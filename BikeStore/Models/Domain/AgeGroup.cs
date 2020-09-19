@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,7 +12,7 @@ namespace BikeStore.Models.Domain
         [Required(ErrorMessage = "{0} є необхідною")]
         [StringLength(25, MinimumLength = 3, ErrorMessage = "{0} є занадто короткою або занадто великою")]
         public string Value { get; set; }
-      
+
         [JsonIgnore]
         public ICollection<Model> Model { get; set; }
 

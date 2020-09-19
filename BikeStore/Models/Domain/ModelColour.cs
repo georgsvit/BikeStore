@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -36,7 +35,7 @@ namespace BikeStore.Models.Domain
                 }
             }
 
-            return sizes.Values.ToList();            
+            return sizes.Values.ToList();
         }
     }
 }

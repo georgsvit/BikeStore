@@ -6,7 +6,7 @@ namespace BikeStore.Models.Domain
 {
     public class OrderHeader
     {
-        public int Id { get; set; }        
+        public int Id { get; set; }
         [Required(ErrorMessage = "Будь ласка введіть адресу доставки")]
         public string ShippingAddress { get; set; }
         public DateTime CreationDate { get; set; }

@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Text;
-using System.Threading.Tasks;
-using BikeStore.Models.Domain;
+﻿using BikeStore.Models.Domain;
+using BikeStore.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using BikeStore.Services;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BikeStore.Areas.Identity.Pages.Account
 {
@@ -57,9 +57,9 @@ namespace BikeStore.Areas.Identity.Pages.Account
                 protocol: Request.Scheme);
 
             await _mailer.SendVerificationLink(Email, EmailConfirmationUrl);
-            
+
             DisplayConfirmAccountLink = false;
-            
+
             return Page();
         }
     }

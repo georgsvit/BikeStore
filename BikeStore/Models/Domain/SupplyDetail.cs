@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BikeStore.Models.Domain
+﻿namespace BikeStore.Models.Domain
 {
     public class SupplyDetail
     {

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BikeStore.Data;
+﻿using BikeStore.Data;
 using BikeStore.Extensions;
 using BikeStore.Models.Cart;
 using BikeStore.Models.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Host.Mef;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BikeStore.Controllers
 {
@@ -30,7 +29,8 @@ namespace BikeStore.Controllers
             if (cart != null)
             {
                 ViewData["Total"] = cart.Sum(item => item.Model.Price * item.Quantity);
-            } else
+            }
+            else
             {
                 ViewData["Total"] = 0;
                 cart = new List<Item>();
@@ -55,11 +55,12 @@ namespace BikeStore.Controllers
             if (cart.Find(i => i.Model.Id == modelId && i.ModelColour.Id == arr[0] && i.FrameSize.Id == arr[1]) != null)
             {
                 cart.Find(i => i.Model.Id == modelId).Quantity++;
-            } else
+            }
+            else
             {
                 ModelColour modelColour = await _context.ModelColours.Include(mc => mc.Colour).FirstOrDefaultAsync(x => x.Id == arr[0]);
                 FrameSize size = await _context.FrameSizes.FirstOrDefaultAsync(x => x.Id == arr[1]);
-                
+
                 Model model = await _context.Models
                 .Include(m => m.ModelName)
                 .Include(m => m.ModelPrefix)

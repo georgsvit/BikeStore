@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BikeStore.Data;
+﻿using BikeStore.Data;
 using BikeStore.Extensions;
 using BikeStore.Models.Cart;
 using BikeStore.Models.Domain;
 using BikeStore.Services;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BikeStore.Controllers
 {

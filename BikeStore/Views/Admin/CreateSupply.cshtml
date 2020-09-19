@@ -15,7 +15,17 @@
             </div>
             <div>
                 <label class="mr-5">Прийняв</label>
-                <select asp-for="RecipientId" asp-items="ViewBag.Staff"></select>
+                <table style="position: relative; left: 37%;" class="text-center">
+                    <tr>
+                        <td>Ім'я</td>
+                        <td><input style="margin-right: 35px; margin: 10px;" value="@ViewBag.Staff.FirstName" disabled /></td>
+                    </tr>
+                    <tr>
+                        <td>Прізвище</td>
+                        <td><input style="margin-right: 35px; margin: 10px;" value="@ViewBag.Staff.LastName" disabled /></td>
+                    </tr>
+
+                </table>
             </div>
             <br />
             <div>

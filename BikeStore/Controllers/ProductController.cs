@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BikeStore.Data;
+﻿using BikeStore.Data;
 using BikeStore.Models.Domain;
 using BikeStore.Models.View;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BikeStore.Controllers
 {
@@ -21,13 +21,13 @@ namespace BikeStore.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(List<int> selectedCategories, 
-                                               List<int> selectedSuspensions, 
-                                               List<int> selectedSexes, 
-                                               List<int> selectedAges, 
-                                               List<int> selectedYears, 
-                                               List<double> selectedWheels, 
-                                               int lowPriceBorder, int highPriceBorder, 
+        public async Task<IActionResult> Index(List<int> selectedCategories,
+                                               List<int> selectedSuspensions,
+                                               List<int> selectedSexes,
+                                               List<int> selectedAges,
+                                               List<int> selectedYears,
+                                               List<double> selectedWheels,
+                                               int lowPriceBorder, int highPriceBorder,
                                                string searchString, int page = 1, SortState sortOrder = SortState.NameAsc)
         {
             List<Model> models = await _context.Models
@@ -39,14 +39,14 @@ namespace BikeStore.Controllers
                 .Include(m => m.Suspension)
                 .ToListAsync();
 
-            var modelColours = await _context.ModelColours.Include(mc => mc.Colour).ToListAsync();         
+            var modelColours = await _context.ModelColours.Include(mc => mc.Colour).ToListAsync();
             await _context.Bikes.Include(b => b.FrameSize).Include(b => b.Status).Include(b => b.StoringPlace).ToListAsync();
 
             // Get models which are on stock
             var modelColoursId = modelColours.Where(mc => mc.Bike != null && mc.Bike.Where(b => b.Status.Id != 2).Count() != 0).Select(mc => mc.Id).ToList();
-            
+
             models = models.Where(m => m.ModelColoursId.Intersect(modelColoursId).Count() > 0).ToList();
-            
+
             #region Filter
 
             // Filter
@@ -57,7 +57,7 @@ namespace BikeStore.Controllers
             if (selectedYears.Count != 0) models = models.Where(m => selectedYears.Any(y => m.Year == y)).ToList();
             if (selectedWheels.Count != 0) models = models.Where(m => selectedWheels.Any(ws => m.WheelSize == ws)).ToList();
 
-            highPriceBorder = (highPriceBorder == 0 && models.Count != 0) ? models.Max(m => (int)m.Price) : highPriceBorder;            
+            highPriceBorder = (highPriceBorder == 0 && models.Count != 0) ? models.Max(m => (int)m.Price) : highPriceBorder;
             models = models.Where(m => (int)m.Price >= lowPriceBorder && (int)m.Price <= highPriceBorder).ToList();
 
             #endregion
@@ -69,7 +69,7 @@ namespace BikeStore.Controllers
             }
 
             #region Sort
-            
+
             // Sort 
             models = sortOrder switch
             {
@@ -93,14 +93,14 @@ namespace BikeStore.Controllers
                 new SelectListItem { Text = "Колір (за спаданням)", Value = "5", Selected = (int)sortOrder == 5},
                 new SelectListItem { Text = "Ціна (за зростанням)", Value = "6", Selected = (int)sortOrder == 6},
                 new SelectListItem { Text = "Ціна  (за спаданням)", Value = "7", Selected = (int)sortOrder == 7},
-            };          
+            };
 
             #endregion
 
             // Pagination
             int modelsCount = models.Count;
             models = models.Skip((page - 1) * _itemsPerPage).Take(_itemsPerPage).ToList();
-            
+
             ViewData["PageViewModel"] = new PageViewModel(modelsCount, page, _itemsPerPage);
             ViewData["FilterViewModel"] = new FilterViewModel(await _context.Categories.ToListAsync(), selectedCategories,
                                                               await _context.Suspensions.ToListAsync(), selectedSuspensions,
@@ -108,13 +108,13 @@ namespace BikeStore.Controllers
                                                               await _context.AgeGroups.ToListAsync(), selectedAges,
                                                               await _context.Models.Select(m => m.Year).Distinct().ToListAsync(), selectedYears,
                                                               await _context.Models.Select(m => m.WheelSize).Distinct().ToListAsync(), selectedWheels,
-                                                              lowPriceBorder, 
+                                                              lowPriceBorder,
                                                               (models.Count != 0) ? models.Max(m => (int)m.Price) : highPriceBorder,
                                                               searchString);
 
             return View(models);
         }
-    
+
         public async Task<IActionResult> ProductDetails(int? id, string returnUrl)
         {
             if (id == null)
@@ -136,8 +136,8 @@ namespace BikeStore.Controllers
                 return NotFound();
             }
 
-            await _context.ModelColours.Include(mc => mc.Colour).ToListAsync();                                    
-            await _context.Bikes.Include(b => b.FrameSize).Include(b => b.Status).Include(b => b.StoringPlace).ToListAsync();                       
+            await _context.ModelColours.Include(mc => mc.Colour).ToListAsync();
+            await _context.Bikes.Include(b => b.FrameSize).Include(b => b.Status).Include(b => b.StoringPlace).ToListAsync();
 
             Dictionary<string, List<int>> ColourAndSizes = new Dictionary<string, List<int>>() { };
 
@@ -152,7 +152,7 @@ namespace BikeStore.Controllers
                 for (int i = 0; i < c.Value.Count; i++)
                 {
                     if (c.Value[i] != 0)
-                    {                        
+                    {
                         availableBikes.Add(new SelectListItem(c.Key + " " + sizes[i], _context.ModelColours.FirstOrDefault(mc => mc.Colour.ColourValue == c.Key && mc.ModelId == id).Id + " " + _context.FrameSizes.FirstOrDefault(fs => fs.Size == sizes[i]).Id + " " + c.Value[i]));
                     }
                 }

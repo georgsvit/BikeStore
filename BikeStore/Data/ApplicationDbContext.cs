@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BikeStore.Models.Domain;
+﻿using BikeStore.Models.Domain;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +7,7 @@ namespace BikeStore.Data
     public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options) 
+            : base(options)
         {
             Database.EnsureCreated();
         }
@@ -29,8 +26,8 @@ namespace BikeStore.Data
         public DbSet<Sex> Sexes { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<StoringPlace> StoringPlaces { get; set; }
-        public DbSet<SupplyDetail> SupplyDetails{ get; set; }
+        public DbSet<SupplyDetail> SupplyDetails { get; set; }
         public DbSet<SupplyHeader> SupplyHeaders { get; set; }
-        public DbSet<Suspension> Suspensions { get; set; }        
+        public DbSet<Suspension> Suspensions { get; set; }
     }
 }

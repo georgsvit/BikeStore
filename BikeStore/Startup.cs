@@ -1,20 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
 using BikeStore.Data;
+using BikeStore.Extensions;
+using BikeStore.Models.Domain;
+using BikeStore.Services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BikeStore.Models.Domain;
-using BikeStore.Extensions;
-using BikeStore.Services;
 using System.Globalization;
 
 namespace BikeStore
@@ -37,8 +31,8 @@ namespace BikeStore
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<User>(options => 
-            {                
+            services.AddDefaultIdentity<User>(options =>
+            {
                 options.SignIn.RequireConfirmedAccount = true;
                 options.Password.RequireDigit = true;
                 options.Password.RequiredLength = 8;
@@ -56,7 +50,8 @@ namespace BikeStore
             if (CurrentEnvironment.IsDevelopment())
             {
                 services.Configure<SmtpSettings>(Configuration.GetSection("SmtpDevelopmentSettings"));
-            } else
+            }
+            else
             {
                 services.Configure<SmtpSettings>(Configuration.GetSection("SmtpReleaseSettings"));
             }
@@ -94,7 +89,7 @@ namespace BikeStore
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
-                
+
             });
 
             app.UseRequestLocalization();

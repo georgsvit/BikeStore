@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BikeStore.Models.Domain
+﻿namespace BikeStore.Models.Domain
 {
     public class OrderDetail
     {
@@ -11,6 +8,6 @@ namespace BikeStore.Models.Domain
         public OrderHeader OrderHeader { get; set; }
         //
         public int BikeId { get; set; }
-        public Bike Bike { get; set; }        
+        public Bike Bike { get; set; }
     }
 }

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BikeStore.Attributes;
 using BikeStore.Data;
 using BikeStore.Models.Domain;
@@ -9,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BikeStore.Areas.DbAdmin.Pages
 {
@@ -33,7 +32,7 @@ namespace BikeStore.Areas.DbAdmin.Pages
         }
 
         public async Task OnPostCreate([Bind("Size, MinHeight, MaxHeight")] FrameSize frameSize)
-        {            
+        {
             ValidateSize(frameSize, ModelState);
             if (ModelState.IsValid)
             {
