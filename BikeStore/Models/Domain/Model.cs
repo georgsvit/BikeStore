@@ -27,37 +27,43 @@ namespace BikeStore.Models.Domain
         public int Year { get; set; }
         //
         [Required(ErrorMessage = "Будь ласка введіть модельний рік")]
-        [WheelSize(new double[] { 20, 24, 26, 27.5, 29 }, ErrorMessage = "Недійсне значення розміру коліс. Введіть одне із значень (20, 24, 26, 27.5, 29)")]
+        [WheelSize(new double[] { 12, 16, 20, 24, 26, 27.5, 28, 29 }, ErrorMessage = "Недійсне значення розміру коліс. Введіть одне із значень (20, 24, 26, 27.5, 29)")]
         [Display(Name = "Розмір коліс (у дюймах)")]
         public double WheelSize { get; set; }
         //
         [Display(Name = "Стать")]
         public Sex Sex { get; set; }
+        [Display(Name = "Стать")]
         [Required(ErrorMessage = "Будь ласка введіть статєву групу")]
         public int SexId { get; set; }
         //
         [Display(Name = "Вікова група")]
         public AgeGroup AgeGroup { get; set; }
+        [Display(Name = "Вікова група")]
         [Required(ErrorMessage = "Будь ласка введіть вікову групу")]
         public int AgeGroupId { get; set; }
         //
         [Display(Name = "Назва")]
         public ModelName ModelName { get; set; }
+        [Display(Name = "Назва")]
         [Required(ErrorMessage = "Будь ласка введіть назву")]
         public int ModelNameId { get; set; }
         //
         [Display(Name = "Префікс назви")]
         public ModelPrefix ModelPrefix { get; set; }
+        [Display(Name = "Префікс назви")]
         [Required(ErrorMessage = "Будь ласка введіть префікс назви")]
         public int ModelPrefixId { get; set; }
         //
         [Display(Name = "Тип підвіски")]
         public Suspension Suspension { get; set; }
+        [Display(Name = "Тип підвіски")]
         [Required(ErrorMessage = "Будь ласка введіть тип підвіски")]
         public int SuspensionId { get; set; }
         //
         [Display(Name = "Категорія")]
         public Category Category { get; set; }
+        [Display(Name = "Категорія")]
         [Required(ErrorMessage = "Будь ласка введіть категорію")]
         public int CategoryId { get; set; }
         //
@@ -65,12 +71,12 @@ namespace BikeStore.Models.Domain
 
         public string FullNameWithYear
         {
-            get => (ModelName != null && ModelPrefix != null) ? "GT " + ModelName.Value + " " + ModelPrefix.Value + " " + Year : "GT";
+            get => (ModelName != null && ModelPrefix != null) ? "GT " + ModelName.Value + " " + WheelSize + " " + ModelPrefix.Value + " " + Year : "GT";
         }
 
         public string FullName
         {
-            get => (ModelName != null && ModelPrefix != null) ? "GT " + ModelName.Value + " " + ModelPrefix.Value : "GT";
+            get => (ModelName != null && ModelPrefix != null) ? "GT " + ModelName.Value + " " + WheelSize + " " + ModelPrefix.Value : "GT";
         }
 
         public string Name

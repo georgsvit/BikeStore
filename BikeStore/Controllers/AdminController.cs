@@ -65,7 +65,7 @@ namespace BikeStore.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("SupplyBikes", "Admin", new { headerid = header.Id });
             }
-            ViewData["Staff"] = new SelectList(_context.Users, "Id", "GetFullName", header.RecipientId);
+            ViewData["Staff"] = _context.Users.FirstOrDefault(u => u.Email == User.Identity.Name);
             return View("CreateSupply", header);
         }
 

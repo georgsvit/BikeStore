@@ -57,7 +57,7 @@ namespace BikeStore.Controllers
             if (selectedYears.Count != 0) models = models.Where(m => selectedYears.Any(y => m.Year == y)).ToList();
             if (selectedWheels.Count != 0) models = models.Where(m => selectedWheels.Any(ws => m.WheelSize == ws)).ToList();
 
-            highPriceBorder = (highPriceBorder == 0 && models.Count != 0) ? models.Max(m => (int)m.Price) : highPriceBorder;
+            highPriceBorder = models.Max(m => (int)m.Price);
             models = models.Where(m => (int)m.Price >= lowPriceBorder && (int)m.Price <= highPriceBorder).ToList();
 
             #endregion

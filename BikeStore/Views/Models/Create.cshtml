@@ -1,23 +1,23 @@
 ﻿@model BikeStore.Models.Domain.Model
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Створити модель";
 }
 
-<h1>Create</h1>
+<h1>Створити</h1>
 
-<h4>Model</h4>
+<h4>Модель</h4>
 <hr />
 <div class="row">
     <div class="col-6">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ModelNameId" class="control-label">Model Name</label>
+                <label asp-for="ModelNameId" class="control-label"></label>
                 <select asp-for="ModelNameId" class ="form-control" asp-items="ViewBag.ModelNameId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="ModelPrefixId" class="control-label">Model Name Prefix</label>
+                <label asp-for="ModelPrefixId" class="control-label"></label>
                 <select asp-for="ModelPrefixId" class ="form-control" asp-items="ViewBag.ModelPrefixId"></select>
             </div>
             <div class="form-group">
@@ -36,34 +36,34 @@
                 <span asp-validation-for="Year" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="WheelSize" class="control-label">Wheel size</label>
+                <label asp-for="WheelSize" class="control-label"></label>
                 <input asp-for="WheelSize" value="0" class="form-control" />
                 <span asp-validation-for="WheelSize" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SexId" class="control-label">Sex</label>
+                <label asp-for="SexId" class="control-label"></label>
                 <select asp-for="SexId" class ="form-control" asp-items="ViewBag.SexId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="AgeGroupId" class="control-label">Age group</label>
+                <label asp-for="AgeGroupId" class="control-label"></label>
                 <select asp-for="AgeGroupId" class ="form-control" asp-items="ViewBag.AgeGroupId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="SuspensionId" class="control-label">Suspension</label>
+                <label asp-for="SuspensionId" class="control-label"></label>
                 <select asp-for="SuspensionId" class ="form-control" asp-items="ViewBag.SuspensionId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="CategoryId" class="control-label">Category</label>
+                <label asp-for="CategoryId" class="control-label"></label>
                 <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Створити" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Повернутися до усіх моделей</a>
 </div>
 

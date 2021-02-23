@@ -1,12 +1,12 @@
 ﻿@model BikeStore.Models.Domain.Bike
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Створити велосипед";
 }
 
 <h1>Створити</h1>
 
-<h4>велосипед</h4>
+<h4>Велосипед</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -34,7 +34,7 @@
                 <select asp-for="ModelColourId" class ="form-control" asp-items="ViewBag.ModelColourId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Створити" class="btn btn-primary" />
             </div>
         </form>
     </div>

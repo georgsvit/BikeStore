@@ -9,6 +9,7 @@ namespace BikeStore.Models.Domain
     {
         public int Id { get; set; }
         //
+        [Display(Name = "Посилання на зображення")]
         [Required(ErrorMessage = "Будь ласка введіть посилання на зображення")]
         [DataType(DataType.ImageUrl)]
         public string ImageLink { get; set; }
@@ -19,6 +20,7 @@ namespace BikeStore.Models.Domain
         public int ModelId { get; set; }
         //
         public Colour Colour { get; set; }
+        [Display(Name = "Колір")]
         [Required(ErrorMessage = "Будь ласка оберіть колір")]
         public int ColourId { get; set; }
         //
