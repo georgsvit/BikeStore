@@ -4,7 +4,6 @@ using BikeStore.Models.Domain;
 using BikeStore.Models.View;
 using BikeStore.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
