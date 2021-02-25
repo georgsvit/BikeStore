@@ -1,4 +1,5 @@
 ﻿using BikeStore.Models.Domain;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,21 @@ namespace BikeStore.Data
             : base(options)
         {
             Database.EnsureCreated();
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            AddDefaultRoles(builder);
+        }
+
+        private void AddDefaultRoles(ModelBuilder builder)
+        {
+            builder.Entity<IdentityRole>().HasData(
+                new IdentityRole() { Name = "Admin", NormalizedName = "ADMIN" },
+                new IdentityRole() { Name = "Seller", NormalizedName = "SELLER" },
+                new IdentityRole() { Name = "Customer", NormalizedName = "CUSTOMER" }
+            );
         }
 
         public DbSet<AgeGroup> AgeGroups { get; set; }

@@ -61,7 +61,7 @@ namespace BikeStore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -93,6 +93,8 @@ namespace BikeStore
             });
 
             app.UseRequestLocalization();
+
+            DataInitializer.SeedData(userManager, roleManager);
 
             CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en");
             CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en");
