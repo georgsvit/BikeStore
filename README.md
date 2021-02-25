@@ -4,7 +4,7 @@
 - [Description](#Description)
 - [Technologies](#Technologies)
 - [Setup](#Setup)
-- [Project structure and details](#Project-structural-features)
+- [Project structural features](#Project-structural-features)
 - [Application appearance](#Application-appearance)
     - [Customer area](#Customer-area)
     - [Seller area](#Seller-area)
